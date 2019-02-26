@@ -72,6 +72,8 @@ public class Servidor {
 			
 			//Cantidad de mensajes por cliente
 			String[] cantidadMensajes = valores[3].split("|");
+			cantMensajes = new int[numeroClientes];
+			
 			for(int i = 0; i< cantidadMensajes.length; i++)
 			{
 				cantMensajes[i] = Integer.parseInt(cantidadMensajes[i]);
