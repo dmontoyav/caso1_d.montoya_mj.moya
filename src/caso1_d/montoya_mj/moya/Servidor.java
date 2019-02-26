@@ -8,9 +8,9 @@ import java.io.IOException;
 public class Servidor {
 
 	//TODO preguntar si el buffer debe ser estático. 
-	private static Buffer buffer;
+	private Buffer buffer;
 	private ServidorThread[] servidores;
-	private static final String RUTA = "parametros.csv";
+	private static final String RUTA = "parametros.txt";
 	
 	public Servidor(Buffer pBuffer, int numServidores)
 	{
@@ -25,11 +25,14 @@ public class Servidor {
 	
 	private void terminoEjecucion() 
 	{
+		System.out.println("Empieza termino "+ servidores.length);
 		for(int i = 0; i<servidores.length; i++)
 		{
 			try {
 				//TODO Preguntar bien para que sirve el join.
+				System.out.println("Antes del join" + i);
 				servidores[i].join();
+				System.out.println("Entro!!!!" + i);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				System.out.println("Error esperando a los demas");
@@ -49,7 +52,7 @@ public class Servidor {
 		BufferedReader lector;
 		try {
 			lector = new BufferedReader(new FileReader(RUTA));
-			lector.readLine();
+			//lector.readLine();
 			String info = lector.readLine();
 			lector.close();
 			
@@ -64,20 +67,20 @@ public class Servidor {
 			
 			//Lee el numero de servidores
 			numeroServ=Integer.parseInt(valores[1]);
-			System.out.println("Numero servidores " + numeroServ);
+			System.out.println("Numero servidores: " + numeroServ);
 			
 			//Lee el numero de clientes
-			numeroClientes=Integer.parseInt(valores[2]);
-			System.out.println("Numero Clientes " + numeroClientes);
+			numeroClientes = Integer.parseInt(valores[2]);
+			System.out.println("Numero Clientes: " + numeroClientes);
 			
 			//Cantidad de mensajes por cliente
-			String[] cantidadMensajes = valores[3].split("|");
+			String[] cantidadMensajes = valores[3].split(";");
 			cantMensajes = new int[numeroClientes];
 			
 			for(int i = 0; i< cantidadMensajes.length; i++)
 			{
 				cantMensajes[i] = Integer.parseInt(cantidadMensajes[i]);
-				System.out.println("Cantidad mensajes del cliente " + i+1 + " = " + cantMensajes[i]);
+				System.out.println("Cantidad mensajes del cliente " + (i+1) + " = " + cantMensajes[i]);
 			}
 			
 			//Comprobación datos correctos
@@ -93,13 +96,12 @@ public class Servidor {
 		//Ejecución del programa
 		Buffer pBuffer = new Buffer(capacidadBuffer, numeroClientes);
 		
-		for(int i=0; i< numeroClientes; i++){
-			new Cliente(pBuffer, cantMensajes[i]).start();
+		for(int i = 0; i< numeroClientes; i++){
+			new Cliente(i,pBuffer, cantMensajes[i]).start();
 		}
 		Servidor ser = new Servidor(pBuffer, numeroServ);
 		ser.terminoEjecucion();
 		
-
 	}
 
 }

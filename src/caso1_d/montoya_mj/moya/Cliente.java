@@ -4,11 +4,13 @@ public class Cliente extends Thread{
 
 	private Buffer buffer;
 	private int cantMensajes;
+	private int id;
 	
-	public Cliente(Buffer pBuffer,int pNumero)
+	public Cliente(int pId,Buffer pBuffer,int pNumero)
 	{
 		buffer = pBuffer;
 		cantMensajes = pNumero;
+		id=pId;
 	}
 	
 	public void run()
@@ -18,14 +20,15 @@ public class Cliente extends Thread{
 		{
 			
 			Mensaje mensaje = new Mensaje((int) (Math.random()*10));
-			System.out.println("El mensaje es: " + mensaje.getMensaje());
 			buffer.addMensaje(mensaje);
+			System.out.println("El mensaje es: " + mensaje.getMensaje() + " del cliente "+ id);
 			int resp = mensaje.getRespuesta();
-			System.out.println("La respuesta del servidor es: " + resp);
+			System.out.println("La respuesta del servidor es: " + resp + " del cliente " + id);
 			i++;
 		}
 		
 		buffer.retiroCliente();
+		System.out.println("Se va el cliente "+ id);
 	}
 	
 }
