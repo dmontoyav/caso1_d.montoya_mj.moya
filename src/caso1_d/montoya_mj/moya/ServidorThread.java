@@ -14,7 +14,7 @@ public class ServidorThread extends Thread{
 		while(buffer.hayClientes())
 		{
 			Mensaje mensaje = buffer.darMensaje();
-			mensaje.recibeRespuesta(mensaje.getMensaje()+1);
+			mensaje.recibeRespuesta(mensaje.getMensaje() + 1);
 		}
 	}
 }

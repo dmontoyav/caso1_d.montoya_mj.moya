@@ -10,7 +10,7 @@ public class Buffer {
 	
 	public Buffer(int pCapacidad, int pNumeroClientes)
 	{
-		capacidad=pCapacidad;
+		capacidad = pCapacidad;
 		numeroClientes = pNumeroClientes;
 		colaMensajes = new ArrayList<>();
 	}
