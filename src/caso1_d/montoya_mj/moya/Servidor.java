@@ -1,9 +1,8 @@
 package caso1_d.montoya_mj.moya;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
+
 
 public class Servidor {
 
@@ -12,6 +11,10 @@ public class Servidor {
 	private ServidorThread[] servidores;
 	private static final String RUTA = "parametros.txt";
 	
+	/** 
+	 * Constructor: Inicializa los servidores thread y recibe la conexion del buffer
+	 * 
+	 */
 	public Servidor(Buffer pBuffer, int numServidores)
 	{
 		buffer = pBuffer;
@@ -23,16 +26,16 @@ public class Servidor {
 		}
 	}
 	
+	/**
+	 * Reporta el fin de la ejecución del programana cuando todos los threads terminaron su ejecución
+	 */
 	private void terminoEjecucion() 
 	{
-		System.out.println("Empieza termino "+ servidores.length);
 		for(int i = 0; i<servidores.length; i++)
 		{
 			try {
 				//TODO Preguntar bien para que sirve el join.
-				System.out.println("Antes del join" + i);
 				servidores[i].join();
-				System.out.println("Entro!!!!" + i);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				System.out.println("Error esperando a los demas");
@@ -41,6 +44,10 @@ public class Servidor {
 		System.out.println("Terminaron todos los threads");
 	}
 	
+	/**
+	 * Main para ejecutar el programa
+	 * @param args
+	 */
 	public static void main(String[] args) {
 
 		int capacidadBuffer = 0;
@@ -52,7 +59,6 @@ public class Servidor {
 		BufferedReader lector;
 		try {
 			lector = new BufferedReader(new FileReader(RUTA));
-			//lector.readLine();
 			String info = lector.readLine();
 			lector.close();
 			
