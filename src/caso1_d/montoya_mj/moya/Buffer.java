@@ -47,7 +47,7 @@ public class Buffer {
 			}	
 		}
 		colaMensajes.add(mensaje);
-		System.out.println("Cant mensajes buffer " + colaMensajes.size());
+		
 	}
 
 	/**
